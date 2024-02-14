@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form action="{% url 'polls:vote' question.id %}" method="post">
+        {% csrf_token %}
+        <div class="div-01-layout">
+            <div class="div-01-body">
+
+                <div class="question-title">
+                    <h1>{{ question.question_text }}</h1>
+                </div>
+    
+                <div class="alert-message">
+                    {% if error_message %}
+                        <p>
+                            <strong>{{ error_message }}</strong>
+                        </p>
+                    {% endif %}
+                </div>
+    
+                <div class="label-input">
+                    {% for choice in question.choice_set.all %}
+                        <div class="choice">
+                            <input type="radio" name="choice" id="choice{{ forloop.counter }}">
+                            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+    
+                <input class="vote-btn" type="submit" value="Vote">
+            </div>
+        </div>
+    </form>
+
+    <style>
+        .div-01-layout {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .div-01-body {
+            min-width: 300px;
+            max-width: 1024px;
+            width: 90%;
+            height: auto;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .question-title {
+            width: 100%;
+            height: auto;
+            margin: 5px 0px;            
+        }
+
+        .question-title h1 {
+            width: 100%;
+            height: auto;
+            font-size: 36px;
+            text-align: center;
+        }
+
+        .alert-message {
+            width: 100%;
+            height: 50px;
+        }
+
+        .label-input {
+            width: 90%;
+            min-height: 70px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 10px 0;
+        }
+
+        .vote-btn{
+            width: 150px;
+            height: 40px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #444;;
+            color: #fff;
+            font-size: 20px;
+            margin: 20px 0px;
+            transition: .3s ease-in-out;
+        }
+
+        .vote-btn:hover {
+            background-color: #fff;
+            color: #444;
+        }
+
+
+    </style>
+    
+</body>
+</html>
