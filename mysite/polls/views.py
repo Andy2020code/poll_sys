@@ -1,14 +1,15 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect, Http404
 from django.urls import reverse
-
+from django.utils import timezone
+from django.views.generic import DetailView
 
 from . models import Question, Choice
 
 # Create your views here.
 
 def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    latest_question_list = Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
     context = {
         'latest_question_list': latest_question_list,
     }
@@ -19,14 +20,21 @@ def index(request):
 
 
 
-def detail(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
 
-    context = {
-        'question': question,
-    }
-    return render(request, 'polls/detail.html', context)
+class QuestionDetailView(DetailView):
+    model = Question
+    template_name = 'polls/detail.html'
 
+    def get_queryset(self):
+        # Exclude questions with a pub_date in the future
+        return Question.objects.filter(pub_date__lte=timezone.now())
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.pub_date > timezone.now():
+            raise Http404("Question does not exist")
+        return obj
+    
 
 
 def results(request, question_id):
