@@ -3,6 +3,40 @@
     padding: 0;
 }
 
+.language_switcher_layout{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0px;
+}
+
+.switcher-body{
+    width: 50%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.switcher-body button{
+    width: 50px;
+    height: 50px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 20px;
+}
+
+.EN{
+    background-image: url(../static/IMG/brazil-flag.png);
+}
+
+.switcher-body button:hover{
+    cursor: pointer;
+}
+
 .div-01-layout {
     display: flex;
     justify-content: center;

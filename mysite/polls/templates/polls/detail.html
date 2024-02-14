@@ -9,6 +9,14 @@
 </head>
 <body>
 
+    <div class="language_switcher_layout">
+        <div class="switcher-body">
+            <a href="#" language="english"><button class="EN">EN</button></a>
+            <a href="#" language="portuguese"><button class="PT">PT</button></a>
+            <a href="#" language="spanish"><button class="ES">ES</button></a>
+        </div>
+    </div>
+
     <form action="{% url 'polls:vote' question.id %}" method="post">
         {% csrf_token %}
         <div class="div-01-layout">
